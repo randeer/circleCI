@@ -1,0 +1,7 @@
+# An Overview of the Advantages and Disadvantages of Building Applications with .NET Core with jenkins CI/CD with IIS Web server
+
+.NET Core is a cross-platform, open-source development platform created by Microsoft for building different types of applications, including web applications, desktop applications, and command-line tools. It is the latest version of the .NET framework and is designed to be modular, flexible, and lightweight, allowing developers to build and deploy applications more easily across multiple platforms, including Windows, macOS, and Linux.
+
+.NET Core includes a common language runtime (CLR), which manages the execution of code and provides features like garbage collection and type safety. It also includes a class library, which provides a rich set of APIs for developers to use in their applications. .NET Core supports multiple programming languages, including C#, F#, and Visual Basic, and includes tools like Visual Studio Code and the .NET Core command-line interface (CLI) for building and deploying applications.
+
+One of the key features of .NET Core is its ability to deploy applications as self-contained executables that include everything needed to run the application, including the runtime and dependencies. This makes it easy to deploy applications to different environments without worrying about compatibility issues or installing dependencies separately.
