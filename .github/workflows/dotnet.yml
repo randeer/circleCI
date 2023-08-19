@@ -37,5 +37,16 @@ jobs:
         docker tag randeerdil/asp-dot-net-core-cv randeerdil/asp-dot-net-core-cv:$IMAGE_TAG
         docker push randeerdil/asp-dot-net-core-cv:$IMAGE_TAG
         echo "The latest docker image has been uploaded to the repo.."
+    - name: ssh into server
+      uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+      env:
+       IMAGE_TAG
+      with:
+       host: ${{ secrets.DC_HOST }}
+       user: ${{ secrets.DC_USER }}
+       pass: ${{ secrets.DC_PASS }}
+       connect_timeout: 10s
+       first_ssh: |
+         docker run -d -p 8080:80 randeerdil/asp-dot-net-core-cv:$IMAGE_TAG
     - name: Test
       run: dotnet test --no-build --verbosity normal
