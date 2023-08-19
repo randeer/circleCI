@@ -50,5 +50,7 @@ jobs:
        last_ssh: |
          hostnamectl
          echo $IMAGE_TAG
+         pwd
+         ls -al
     - name: Test
       run: dotnet test --no-build --verbosity normal
