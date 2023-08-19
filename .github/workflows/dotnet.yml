@@ -40,7 +40,7 @@ jobs:
     - name: ssh into server
       uses: cross-the-world/ssh-scp-ssh-pipelines@latest
       env:
-       IMAGE_TAG
+       IMAGE_TAG: ${{ env.IMAGE_TAG }}
       with:
        host: ${{ secrets.DC_HOST }}
        user: ${{ secrets.DC_USER }}
