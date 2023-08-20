@@ -48,5 +48,6 @@ jobs:
         image: randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
         name: rashmikacv
         location: 'east us'
+        arguments: --docker-login
     - name: Test
       run: dotnet test --no-build --verbosity normal
