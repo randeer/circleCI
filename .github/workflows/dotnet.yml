@@ -38,5 +38,14 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Deploy to Azure Container Instances
+      uses: 'azure/aci-deploy@v1'
+      env:
+       IMAGE_TAG: ${{ env.IMAGE_TAG }}
+      with:
+        resource-group: crypto-test
+        image: randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
+        name: rashmikacv
+        location: 'east us'
     - name: Test
       run: dotnet test --no-build --verbosity normal
