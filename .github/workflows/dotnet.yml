@@ -34,5 +34,9 @@ jobs:
         docker tag randeerdil/aspdotnetcorecv-azure randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
         docker push randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
         echo "The latest docker image has been uploaded to the repo.."
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Test
       run: dotnet test --no-build --verbosity normal
