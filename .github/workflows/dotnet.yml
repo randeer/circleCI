@@ -45,7 +45,7 @@ jobs:
       with:
         resource-group: crypto-test
         dns-name-label: rashmikacvcontainer
-        image: nginx
+        image: randeerdil/aspdotnetcorecv-azure:20230820123506
         name: rashmikacv
         location: 'east us'
     - name: Test
