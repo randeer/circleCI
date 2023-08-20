@@ -44,6 +44,7 @@ jobs:
        IMAGE_TAG: ${{ env.IMAGE_TAG }}
       with:
         resource-group: crypto-test
+        dns-name-label: rashmikacvcontainer
         image: randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
         name: rashmikacv
         location: 'east us'
