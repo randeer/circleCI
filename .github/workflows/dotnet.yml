@@ -45,9 +45,8 @@ jobs:
       with:
         resource-group: crypto-test
         dns-name-label: rashmikacvcontainer
-        image: randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
+        image: nginx
         name: rashmikacv
         location: 'east us'
-        arguments: --docker-login
     - name: Test
       run: dotnet test --no-build --verbosity normal
