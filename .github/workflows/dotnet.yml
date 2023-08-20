@@ -53,6 +53,7 @@ jobs:
          echo $IMAGE_TAG
          pwd
          ls -al
+         docker stop rashmika_CV && docker rm rashmika_CV
          docker run -d --name rashmika_CV -p 8080:80 randeerdil/asp-dot-net-core-cv:$IMAGE_TAG
     - name: Test
       run: dotnet test --no-build --verbosity normal
