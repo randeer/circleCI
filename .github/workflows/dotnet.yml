@@ -46,7 +46,7 @@ jobs:
         resource-group: crypto-test
         dns-name-label: rashmikacvcontainer
         image: randeerdil/aspdotnetcorecv-azure:$IMAGE_TAG
-        #name: rashmikacv
+        name: rashmikacv
         location: 'east us'
     - name: Test
       run: dotnet test --no-build --verbosity normal
