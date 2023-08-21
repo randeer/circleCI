@@ -24,12 +24,16 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
+    - name: Install MSDeploy
+      run: |
+        wget -q -O - https://aka.ms/msdeployinstalldir | tar xz
+        export PATH=$PATH:$(pwd)/msdeploy
     - uses: ChristopheLav/iis-deploy@v1
       with:
         website-name: 'rash-test'
         msdeploy-service-url: ${{ secrets.MSDEPLOY_URL }}
         msdeploy-username: ${{ secrets.MSDEPLOY_USERNAME }}
         msdeploy-password: ${{ secrets.MSDEPLOY_PASSWORD }}
-        source-path: ${{ github.workspace }}\website\publish
+        source-path: ${{ github.workspace }}/website/publish
     - name: Test
       run: dotnet test --no-build --verbosity normal
