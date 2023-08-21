@@ -24,12 +24,14 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - uses: ChristopheLav/iis-deploy@v1
+    - name: Publish
+      run: dotnet publish mytest-1/mytest-1.csproj --configuration Release --framework netcoreapp3.1 --output ./publish --runtime win-x86 --self-contained true -p:PublishTrimmed=false -p:PublishSingleFile=false
+    - name: Test with .NET
+      run: dotnet test
+    - name: Deploy to Simply
+      uses: rasmusbuchholdt/simply-web-deploy@2.1.0
       with:
-        website-name: 'rash-test'
-        msdeploy-service-url: ${{ secrets.MSDEPLOY_URL }}
-        msdeploy-username: ${{ secrets.MSDEPLOY_USERNAME }}
-        msdeploy-password: ${{ secrets.MSDEPLOY_PASSWORD }}
-        source-path: ${{ github.workspace }}/website/publish
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+        website-name: ${{ secrets.WEBSITE_NAME }}
+        server-computer-name: ${{ secrets.SERVER_COMPUTER_NAME }}
+        server-username: ${{ secrets.SERVER_USERNAME }}
+        server-password: ${{ secrets.SERVER_PASSWORD }}
