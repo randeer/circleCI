@@ -26,8 +26,8 @@ jobs:
       run: dotnet build --no-restore
     - name: Install MSDeploy
       run: |
-        wget -q -O - https://aka.ms/msdeployinstalldir | tar xz
-        export PATH=$PATH:$(pwd)/msdeploy
+        apt-get update
+        apt-get install -y webdeploy
     - uses: ChristopheLav/iis-deploy@v1
       with:
         website-name: 'rash-test'
