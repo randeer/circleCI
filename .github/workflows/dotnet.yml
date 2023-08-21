@@ -12,12 +12,12 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
@@ -26,8 +26,9 @@ jobs:
       run: dotnet build --no-restore
     - name: Install MSDeploy
       run: |
-        sudo apt-get update
-        sudo apt-get install -y webdeploy
+        Invoke-WebRequest -Uri https://aka.ms/msdeployinstalldir -OutFile msdeploy.zip
+        Expand-Archive -Path msdeploy.zip -DestinationPath msdeploy
+        $env:PATH = $env:PATH + ";$(Get-Location)\msdeploy"
     - uses: ChristopheLav/iis-deploy@v1
       with:
         website-name: 'rash-test'
