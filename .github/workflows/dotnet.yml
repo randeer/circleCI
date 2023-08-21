@@ -10,25 +10,19 @@ on:
     branches: [ "iis" ]
 
 jobs:
-  deploy:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Deploy to IIS
-        uses: microsoft/AspNetCore-Runner@v2
-        with:
-          appPath: './YourAppFolder' # Path to your ASP.NET Core application
-          dotnetVersion: '6.x' # Choose the appropriate version
-          publishWebProjects: true
-          arguments: '--configuration Release'
-
-        env:
-          ASPNETCORE_ENVIRONMENT: Production
-
-      - name: Deploy with Web Deploy
-        run: |
-          msdeploy -verb:sync -source:contentPath="./YourAppFolder/bin/Release/net6.0/publish" -dest:contentPath="Default Web Site/YourApp",ComputerName="https://172.190.58.226:8172/msdeploy.axd?site=YourApp",UserName="iis-github\randeer",Password="VumI3dYhgNncro",AuthType="Basic"
-
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
