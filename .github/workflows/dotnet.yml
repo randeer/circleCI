@@ -24,11 +24,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Install MSDeploy
-      run: |
-        Invoke-WebRequest -Uri https://aka.ms/msdeployinstalldir -OutFile msdeploy.zip
-        Expand-Archive -Path msdeploy.zip -DestinationPath msdeploy
-        $env:PATH = $env:PATH + ";$(Get-Location)\msdeploy"
     - uses: ChristopheLav/iis-deploy@v1
       with:
         website-name: 'rash-test'
