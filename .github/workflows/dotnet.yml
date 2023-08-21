@@ -31,3 +31,10 @@ jobs:
         ls -al
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Moved to windows IIS
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        scp -r rashmika randeer@172.190.58.226:/SMB
+         
