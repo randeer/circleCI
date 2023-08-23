@@ -15,33 +15,42 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" type="image/x-icon" href="./assets/images/favicon.ico">
         <link rel="stylesheet" href="./styles/main.css">
-    <style>
-        .container {
-            display: flex; /* Use flexbox to create a flexible layout */
-            height: 100vh; /* Set the height to full viewport height */
-            overflow: hidden; /* Hide overflow content */
-        }
-        .main-content {
-            flex: 1; /* Allow main content to expand and fill available space */
-            padding: 20px; /* Add padding for spacing */
-            background-color: #f0f0f0; /* Set background color for main content */
-        }
-        .iframe-container {
-            width: 300px; /* Set the width of the iframe container */
-            background-color: #fff; /* Set background color for the iframe container */
-            box-shadow: -3px 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for styling */
-            z-index: 999; /* Set a high z-index to ensure it's above other content */
-        }
-        .iframe-container iframe {
-            width: 100%; /* Make the iframe width 100% of the container */
-            height: 100vh; /* Make the iframe height full viewport height */
-            border: none; /* Remove the iframe border */
-        }
-    </style>
+<style>
+  .container {
+    display: flex;
+  }
+
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .advertisement {
+    flex: 1;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border: 1px solid #ccc;
+  }
+
+  .iframe-container {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9 aspect ratio (height/width) */
+  }
+
+  .iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+</style>
     </head>
     <body>
 <div class="container">
-        <div id="container--main", class="main-content">
+        <div id="container--main", class="main-content", class="content">
             <section id="wrapper--hero" class="section--page">
                 <img id="profile-pic" src="./images/profile_pic.JPG">
 
@@ -222,10 +231,13 @@
         <call-us-selector phonesystem-url="https://1208.3cx.cloud" party="randil"></call-us-selector>
         <script defer="defer" src="https://downloads-global.3cx.com/downloads/livechatandtalk/v1/callus.js"></script>
 
+  <div class="advertisement">
     <div class="iframe-container">
-        <iframe src="https://www.scorebat.com/embed/livescore/" frameborder="0" allowfullscreen allow='autoplay; fullscreen' class="_scorebatEmbeddedPlayer_"></iframe>
-        <script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = 'https://www.scorebat.com/embed/embed.js?v=arrv'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'scorebat-jssdk'));</script>
+      <iframe src="https://www.scorebat.com/embed/livescore/" frameborder="0" allowfullscreen allow='autoplay; fullscreen' class="_scorebatEmbeddedPlayer_"></iframe>
+      <script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = 'https://www.scorebat.com/embed/embed.js?v=arrv'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'scorebat-jssdk'));</script>
     </div>
+  </div>
+
 </div>
 
 
