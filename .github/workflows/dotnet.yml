@@ -41,6 +41,5 @@ jobs:
         #chmod 700 ~/.ssh
         #ssh-keyscan 172.190.58.226 >> ~/.ssh/known_hosts
         #sshpass -p VumI3dYhgNncro ssh randeer@172.190.58.226
-        sshpass -p VumI3dYhgNncro ssh -o StrictHostKeyChecking=no randeer@172.190.58.226
-        iis.bat
+        sshpass -p VumI3dYhgNncro ssh -o StrictHostKeyChecking=no randeer@172.190.58.226 && iis.bat
 
