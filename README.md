@@ -1,4 +1,4 @@
-## Automating ASP.NET Core with GitHub Actions: A Comprehensive GuideAutomating ASP.NET Core with GitHub Actions: A Comprehensive Guide
+## Automating ASP.NET Core with GitHub Actions: A Comprehensive Guide
 
 Welcome to my GitHub project where I delve into the power of GitHub Actions for automating various aspects of ASP.NET Core web application development. From streamlining builds and publishing to testing and deployments, this project covers it all.
 
