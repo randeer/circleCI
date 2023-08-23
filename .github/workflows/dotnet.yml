@@ -36,9 +36,9 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y sshpass
         pwd
-        #mkdir .ssh
-        #chmod 700 .ssh
-        #ssh-keyscan 172.190.58.226 >> ~/.ssh/known_hosts
-        #sshpass -p VumI3dYhgNncro ssh randeer@172.190.58.226
-        #dir
+        mkdir ~/.ssh
+        chmod 700 ~/.ssh
+        ssh-keyscan 172.190.58.226 >> ~/.ssh/known_hosts
+        sshpass -p VumI3dYhgNncro ssh randeer@172.190.58.226
+        dir
 
