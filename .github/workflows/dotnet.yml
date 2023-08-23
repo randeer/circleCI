@@ -31,12 +31,11 @@ jobs:
         ls -al
     - name: Test
       run: dotnet test --no-build --verbosity normal
-    - name: Moved to windows IIS
-      uses: moonpathbg/scp_uploader@latest
-      with:
-        host: ${{ secrets.DC_HOST }}
-        port: 22
-        username: ${{ secrets.DC_USER }}
-        key : ${{ secrets.SSH_KEY }}
-        source: "rashmika"
-        target: "/SMB"
+    - name: Connect to windows
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y sshpass
+        ssh-keyscan 172.190.58.226 >> ~/.ssh/known_hosts
+        sshpass -p VumI3dYhgNncro ssh randeer@172.190.58.226
+        dir
+
