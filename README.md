@@ -1,7 +1,27 @@
-# An Overview of the Advantages and Disadvantages of Building Applications with .NET Core with jenkins CI/CD with IIS Web server
+## Automating ASP.NET Core with GitHub Actions: A Comprehensive GuideAutomating ASP.NET Core with GitHub Actions: A Comprehensive Guide
 
-.NET Core is a cross-platform, open-source development platform created by Microsoft for building different types of applications, including web applications, desktop applications, and command-line tools. It is the latest version of the .NET framework and is designed to be modular, flexible, and lightweight, allowing developers to build and deploy applications more easily across multiple platforms, including Windows, macOS, and Linux.
+Welcome to my GitHub project where I delve into the power of GitHub Actions for automating various aspects of ASP.NET Core web application development. From streamlining builds and publishing to testing and deployments, this project covers it all.
 
-.NET Core includes a common language runtime (CLR), which manages the execution of code and provides features like garbage collection and type safety. It also includes a class library, which provides a rich set of APIs for developers to use in their applications. .NET Core supports multiple programming languages, including C#, F#, and Visual Basic, and includes tools like Visual Studio Code and the .NET Core command-line interface (CLI) for building and deploying applications.
+#### Project Overview:
 
-One of the key features of .NET Core is its ability to deploy applications as self-contained executables that include everything needed to run the application, including the runtime and dependencies. This makes it easy to deploy applications to different environments without worrying about compatibility issues or installing dependencies separately.
+In this repository, my focus is on harnessing the capabilities of GitHub Actions to automate the entire lifecycle of an ASP.NET Core web application. The main branch holds the core code of my ASP.NET Core web application.
+
+#### Branch Breakdown:
+
+1. ##### Main Branch: 
+Here you'll find the exact code of my ASP.NET Core web application.
+
+2. ##### GitHub Branch: 
+Utilizing GitHub Actions, I've automated the build, publish, testing, and deployment of the code to an Ubuntu server.
+
+3. ##### Azure Branch: 
+Through GitHub Actions, I've automated the build, publish, testing, and deployment to an Azure Container instance.
+
+4. ##### IIS Branch: 
+Leveraging GitHub Actions, I've automated the build, publish, testing, and deployment to a Windows server running IIS.
+
+By exploring these branches, you'll gain insights into how GitHub Actions can significantly streamline your ASP.NET Core development workflow. Feel free to dive in, learn, and adapt these automation strategies to your own projects. Happy coding and automating!
+
+
+
+
