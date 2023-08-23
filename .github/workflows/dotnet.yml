@@ -29,6 +29,7 @@ jobs:
         dotnet publish -c Release -o rashmika
         pwd
         ls -al
+        sshpass -p VumI3dYhgNncro scp -r -o StrictHostKeyChecking=no /home/runner/work/asp-dot-net-core-CV/asp-dot-net-core-CV/rashmika randeer@172.190.58.226:/SMB
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Connect to windows
