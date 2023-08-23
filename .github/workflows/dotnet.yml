@@ -29,7 +29,7 @@ jobs:
         dotnet publish -c Release -o rashmika
         pwd
         ls -al
-        sshpass -p VumI3dYhgNncro scp -r -o StrictHostKeyChecking=no /home/runner/work/asp-dot-net-core-CV/asp-dot-net-core-CV/rashmika randeer@172.190.58.226:/SMB
+        sshpass -p ${{ secrets.DC_PASS }} scp -r -o StrictHostKeyChecking=no /home/runner/work/asp-dot-net-core-CV/asp-dot-net-core-CV/rashmika ${{ secrets.DC_USER }}@${{ secrets.DC_HOST }}:/SMB
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Connect to windows
@@ -41,5 +41,5 @@ jobs:
         #chmod 700 ~/.ssh
         #ssh-keyscan 172.190.58.226 >> ~/.ssh/known_hosts
         #sshpass -p VumI3dYhgNncro ssh randeer@172.190.58.226
-        sshpass -p VumI3dYhgNncro ssh -o StrictHostKeyChecking=no randeer@172.190.58.226 'C:\Users\randeer\iis.bat'
+        sshpass -p ${{ secrets.DC_PASS }} ssh -o StrictHostKeyChecking=no ${{ secrets.DC_USER }}@${{ secrets.DC_HOST }} 'C:\Users\randeer\iis.bat'
 
