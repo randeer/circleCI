@@ -15,32 +15,26 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Send approval request
-      id: approval
       run: |
         # Use your preferred method to send an approval request to MS Teams
-        # You might need to use a script or a custom tool for this step
-        # Replace the following command with your actual command
-        
         # Example: Sending a message using cURL
         curl -X POST -H "Content-Type: application/json" -d '{
-          "text": "Approval Request: Do you approve this pipeline?"
+          "text": "Approval Request: Please type 'approve' to approve this pipeline."
         }' '${{ secrets.TEAMS_WEBHOOK_URL }}'
         
     - name: Wait for approval
-      id: wait-for-approval
       run: |
         # Wait for 10 minutes (600 seconds)
         sleep 600
         
     - name: Check approval status
-      if: steps.approval.outcome == 'success'
       run: |
-        # Use your preferred method to check the approval status
-        # You might need to use a script or a custom tool for this step
-        # Replace the following command with your actual command
+        # Use your preferred method to retrieve messages from MS Teams
+        # Example: Retrieving messages using cURL (replace with actual command)
+        messages=$(curl -H "Authorization: Bearer $TOKEN" "https://api.teams.microsoft.com/v1.0/me/messages")
         
-        # Example: Checking for approval using a custom script
-        if [check_approval_status_command_here]; then
+        # Check if any message contains the approval keyword
+        if [[ $messages == *"approve"* ]]; then
           echo "Pipeline approved!"
           # Perform the rest of your pipeline steps here
         else
