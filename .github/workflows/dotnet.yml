@@ -1,0 +1,80 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "teams" ]
+  pull_request:
+    branches: [ "teams" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Send Teams Approval Request
+      run: |
+          curl -X POST -H "Content-Type: application/json" -d '{
+            "text": "Pipeline Approval Request",
+            "attachments": [
+              {
+                "title": "Pipeline Approval",
+                "text": "Approve or reject the pipeline by clicking the buttons below.",
+                "actions": [
+                  {
+                    "name": "approve",
+                    "type": "Action.Submit",
+                    "title": "Approve"
+                  },
+                  {
+                    "name": "reject",
+                    "type": "Action.Submit",
+                    "title": "Reject"
+                  }
+                ]
+              }
+            ]
+          }' ${{ secrets.TEAMS_WEBHOOK_URL }}
+
+  wait_for_approval:
+    needs: request_approval
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Wait for Approval
+        id: approval
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { data: approvals } = await github.pulls.listReviews({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number
+            });
+
+            const approved = approvals.some(review => review.state === 'APPROVED');
+
+            console.log(`Pipeline approval status: ${approved}`);
+
+            if (approved) {
+              console.log('Pipeline approved. Continuing with the workflow...');
+            } else {
+              console.log('Pipeline not yet approved. Exiting the workflow.');
+              process.exit(1);
+            }
