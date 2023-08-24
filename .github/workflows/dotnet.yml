@@ -24,14 +24,14 @@ jobs:
         # Example: Sending a message using cURL
         curl -X POST -H "Content-Type: application/json" -d '{
           "text": "Approval Request: Do you approve this pipeline?"
-        }'${{ secrets.TEAMS_WEBHOOK_URL }})
-
+        }' '${{ secrets.TEAMS_WEBHOOK_URL }}'
+        
     - name: Wait for approval
       id: wait-for-approval
       run: |
         # Wait for 10 minutes (600 seconds)
         sleep 600
-
+        
     - name: Check approval status
       if: steps.approval.outcome == 'success'
       run: |
