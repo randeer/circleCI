@@ -1,7 +1,4 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
-name: .NET
+name: Pipeline Approval
 
 on:
   push:
@@ -10,68 +7,43 @@ on:
     branches: [ "teams" ]
 
 jobs:
-  request_approval:
+  approval:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Send Teams Approval Request
-        run: |
-          response=$(curl -X POST -H "Content-Type: application/json" -d '{
-            "type": "message",
-            "attachments": [
-              {
-                "contentType": "application/vnd.microsoft.card.adaptive",
-                "content": {
-                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                  "type": "AdaptiveCard",
-                  "version": "1.0",
-                  "body": [
-                    {
-                      "type": "TextBlock",
-                      "text": "Pipeline Approval Request",
-                      "weight": "bolder",
-                      "size": "medium"
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": "Action.Submit",
-                      "title": "Approve",
-                      "data": "approve"
-                    },
-                    {
-                      "type": "Action.Submit",
-                      "title": "Reject",
-                      "data": "reject"
-                    }
-                  ]
-                }
-              }
-            ]
-          }' ${{ secrets.TEAMS_WEBHOOK_URL }})
-          
-          echo "$response"
+    - name: Send approval request
+      id: approval
+      run: |
+        # Use your preferred method to send an approval request to MS Teams
+        # You might need to use a script or a custom tool for this step
+        # Replace the following command with your actual command
+        
+        # Example: Sending a message using cURL
+        curl -X POST -H "Content-Type: application/json" -d '{
+          "text": "Approval Request: Do you approve this pipeline?"
+        }' ${{ secrets.TEAMS_WEBHOOK_URL }})
 
-  wait_for_approval:
-    needs: request_approval
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    - name: Wait for approval
+      id: wait-for-approval
+      run: |
+        # Wait for 10 minutes (600 seconds)
+        sleep 600
 
-    steps:
-      - name: Wait for Approval
-        id: approval
-        run: |
-          for i in {1..30}; do
-            sleep 20
-            response=$(curl -X GET "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/reviews?state=APPROVED" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}")
-            if [[ "$response" != "[]" ]]; then
-              echo "Pipeline approved. Continuing with the workflow..."
-              exit 0
-            fi
-          done
-          
-          echo "Pipeline not approved within the timeout. Exiting the workflow."
-          exit 1
+    - name: Check approval status
+      if: steps.approval.outcome == 'success'
+      run: |
+        # Use your preferred method to check the approval status
+        # You might need to use a script or a custom tool for this step
+        # Replace the following command with your actual command
+        
+        # Example: Checking for approval using a custom script
+        if [check_approval_status_command_here]; then
+          echo "Pipeline approved!"
+          # Perform the rest of your pipeline steps here
+        else
+          echo "Pipeline rejected!"
+          # Handle rejection
+        fi
