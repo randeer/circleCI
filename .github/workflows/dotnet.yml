@@ -19,27 +19,41 @@ jobs:
 
       - name: Send Teams Approval Request
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{
-            "text": "Pipeline Approval Request",
+          response=$(curl -X POST -H "Content-Type: application/json" -d '{
+            "type": "message",
             "attachments": [
               {
-                "title": "Pipeline Approval",
-                "text": "Approve or reject the pipeline by clicking the buttons below.",
-                "actions": [
-                  {
-                    "name": "approve",
-                    "type": "Action.Submit",
-                    "title": "Approve"
-                  },
-                  {
-                    "name": "reject",
-                    "type": "Action.Submit",
-                    "title": "Reject"
-                  }
-                ]
+                "contentType": "application/vnd.microsoft.card.adaptive",
+                "content": {
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  "type": "AdaptiveCard",
+                  "version": "1.0",
+                  "body": [
+                    {
+                      "type": "TextBlock",
+                      "text": "Pipeline Approval Request",
+                      "weight": "bolder",
+                      "size": "medium"
+                    }
+                  ],
+                  "actions": [
+                    {
+                      "type": "Action.Submit",
+                      "title": "Approve",
+                      "data": "approve"
+                    },
+                    {
+                      "type": "Action.Submit",
+                      "title": "Reject",
+                      "data": "reject"
+                    }
+                  ]
+                }
               }
             ]
-          }' ${{ secrets.TEAMS_WEBHOOK_URL }}
+          }' ${{ secrets.TEAMS_WEBHOOK_URL }})
+          
+          echo "$response"
 
   wait_for_approval:
     needs: request_approval
@@ -49,23 +63,15 @@ jobs:
     steps:
       - name: Wait for Approval
         id: approval
-        uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const { data: approvals } = await github.pulls.listReviews({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.payload.pull_request.number
-            });
-
-            const approved = approvals.some(review => review.state === 'APPROVED');
-
-            console.log(`Pipeline approval status: ${approved}`);
-
-            if (approved) {
-              console.log('Pipeline approved. Continuing with the workflow...');
-            } else {
-              console.log('Pipeline not yet approved. Exiting the workflow.');
-              process.exit(1);
-            }
+        run: |
+          for i in {1..30}; do
+            sleep 20
+            response=$(curl -X GET "https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/reviews?state=APPROVED" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}")
+            if [[ "$response" != "[]" ]]; then
+              echo "Pipeline approved. Continuing with the workflow..."
+              exit 0
+            fi
+          done
+          
+          echo "Pipeline not approved within the timeout. Exiting the workflow."
+          exit 1
