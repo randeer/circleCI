@@ -33,6 +33,7 @@ jobs:
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             source $BASH_ENV
             echo $IMAGE_TAG
+            systemctl status docker
             docker build -t randeerdil/circleci-asp-dot-net-core-cv .
             docker tag randeerdil/circleci-asp-dot-net-core-cv randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
             docker push randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
