@@ -20,4 +20,4 @@ jobs:
           command: |
             dotnet build --no-restore
             ls -al
-            echo "IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $CIRCLE_ENV
+            echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
