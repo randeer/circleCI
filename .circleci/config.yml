@@ -5,27 +5,33 @@ executors:
       - image: cimg/base:2023.10
 
 jobs:
-  build:
-    executor: dotnet-executor
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Restore dependencies
-          command: |
-            sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
-            sudo apt-get install -y aspnetcore-runtime-6.0
-            dotnet restore
-      - run:
-          name: Build
-          command: |
-            dotnet build --no-restore
-            echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
-      - run:
-          name: Build and push docker image
-          command: |
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker build -t randeerdil/circleci-asp-dot-net-core-cv .
-            docker tag randeerdil/circleci-asp-dot-net-core-cv randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
-            docker push randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
-            echo "The latest docker image has been uploaded to the repo.."
+  docker-push:
+    build:
+      executor: dotnet-executor
+      steps:
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Restore dependencies
+            command: |
+              sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
+              sudo apt-get install -y aspnetcore-runtime-6.0
+              dotnet restore
+        - run:
+            name: Build
+            command: |
+              dotnet build --no-restore
+              echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
+        - run:
+            name: Build and push docker image
+            command: |
+              docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+              docker build -t randeerdil/circleci-asp-dot-net-core-cv .
+              docker tag randeerdil/circleci-asp-dot-net-core-cv randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
+              docker push randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
+              echo "The latest docker image has been uploaded to the repo.."
+
+workflows:
+  docker-push-workflow:
+    jobs:
+      - docker-push
