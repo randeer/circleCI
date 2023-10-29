@@ -30,6 +30,7 @@ jobs:
             apt-get update
             curl -fsSL https://get.docker.com -o get-docker.sh
             sh ./get-docker.sh
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             source $BASH_ENV
             echo $IMAGE_TAG
 
