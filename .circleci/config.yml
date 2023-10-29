@@ -35,6 +35,6 @@ jobs:
             echo $IMAGE_TAG
             ls -al
             echo "Roshani Wanamalii"
-            docker build -t randeerdil/circleci-asp-dot-net-core-cv .
+            docker build -t randeerdil/asp-dot-net-core-cv .
             ls -al
             echo "The latest docker image has been uploaded to the repo.."
