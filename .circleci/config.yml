@@ -2,7 +2,7 @@ version: 2.1
 executors:
   dotnet-executor:
     docker:
-      - image: cimg/base:2022.06
+      - image: cimg/base:2023.10
 
 jobs:
   build:
@@ -13,6 +13,8 @@ jobs:
           name: Restore dependencies
           command: |
             ls -al
+            apt-get update && apt-get install -y dotnet-sdk-6.0
+            apt-get install -y aspnetcore-runtime-6.0
             pwd
             dotnet restore
       - run:
