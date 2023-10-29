@@ -28,7 +28,8 @@ jobs:
           name: Build and push docker image
           command: |
             apt-get update
-            apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            curl -fsSL https://get.docker.com -o get-docker.sh
+            sh ./get-docker.sh
             source $BASH_ENV
             echo $IMAGE_TAG
 
