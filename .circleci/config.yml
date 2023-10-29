@@ -23,6 +23,7 @@ jobs:
             echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
             echo $BASH_ENV
             echo "Rashmika Manawadu"
+            echo $IMAGE_TAG
       - run:
           name: Build and push docker image
           command: |
