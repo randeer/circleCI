@@ -3,16 +3,13 @@ executors:
   dotnet-executor:
     docker:
       - image: cimg/base:2023.10
-    working_directory: app
-    shell: bash
 
 jobs:
   build:
     executor: dotnet-executor
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
       - checkout
+      - setup_remote_docker
       - run:
           name: Restore dependencies
           command: |
