@@ -2,7 +2,7 @@ version: 2.1
 executors:
   dotnet-executor:
     docker:
-      - image: mcr.microsoft.com/dotnet/sdk:6.0
+      - image: cimg/dotnet:6.0
 
 jobs:
   build:
