@@ -5,39 +5,39 @@ executors:
       - image: cimg/base:2023.10
 
 jobs:
- push-docker-image:
-  build:
-    executor: dotnet-executor
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Restore dependencies
-          command: |
-            ls -al
-            sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
-            sudo apt-get install -y aspnetcore-runtime-6.0
-            pwd
-            dotnet restore
-      - run:
-          name: Build
-          command: |
-            dotnet build --no-restore
-            ls -al
-            echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
-            echo $BASH_ENV
-            echo "Rashmika Manawadu"
-            echo $IMAGE_TAG
-      - run:
-          name: Build and push docker image
-          command: |
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            source $BASH_ENV
-            echo $IMAGE_TAG
-            ls -al
-            echo "Roshani Wanamalii"
-            pwd
-            docker build -t randeerdil/circleci-asp-dot-net-core-cv .
-            docker tag randeerdil/circleci-asp-dot-net-core-cv randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
-            docker push randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
-            echo "The latest docker image has been uploaded to the repo.."
+  push-docker-image:
+    build:
+      executor: dotnet-executor
+      steps:
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Restore dependencies
+            command: |
+              ls -al
+              sudo apt-get update && sudo apt-get install -y dotnet-sdk-6.0
+              sudo apt-get install -y aspnetcore-runtime-6.0
+              pwd
+              dotnet restore
+        - run:
+            name: Build
+            command: |
+              dotnet build --no-restore
+              ls -al
+              echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
+              echo $BASH_ENV
+              echo "Rashmika Manawadu"
+              echo $IMAGE_TAG
+        - run:
+            name: Build and push docker image
+            command: |
+              docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+              source $BASH_ENV
+              echo $IMAGE_TAG
+              ls -al
+              echo "Roshani Wanamalii"
+              pwd
+              docker build -t randeerdil/circleci-asp-dot-net-core-cv .
+              docker tag randeerdil/circleci-asp-dot-net-core-cv randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
+              docker push randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
+              echo "The latest docker image has been uploaded to the repo.."
