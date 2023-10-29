@@ -27,6 +27,7 @@ jobs:
       - run:
           name: Build and push docker image
           command: |
+            apt-get update
             source $BASH_ENV
             echo $IMAGE_TAG
 
