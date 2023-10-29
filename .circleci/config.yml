@@ -3,11 +3,15 @@ executors:
   dotnet-executor:
     docker:
       - image: cimg/base:2023.10
+    working_directory: /app
+    shell: bash
 
 jobs:
   build:
     executor: dotnet-executor
     steps:
+      - setup_remote_docker:
+          docker_layer_caching: true
       - checkout
       - run:
           name: Restore dependencies
@@ -37,4 +41,3 @@ jobs:
             docker tag randeerdil/circleci-asp-dot-net-core-cv randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
             docker push randeerdil/circleci-asp-dot-net-core-cv:$IMAGE_TAG
             echo "The latest docker image has been uploaded to the repo.."
-
