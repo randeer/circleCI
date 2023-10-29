@@ -21,3 +21,5 @@ jobs:
             dotnet build --no-restore
             ls -al
             echo "export IMAGE_TAG=$(date +'%Y%m%d%H%M%S')" >> $BASH_ENV
+            echo $BASH_ENV
+            echo "Rashmika Manawadu"
